@@ -1,24 +1,11 @@
-# README
+# RoR-5 demo
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is a paginator for numbers one to one million.
 
-Things you may want to cover:
+* Ruby version 2.4.1
 
-* Ruby version
+* Run tests with rake test
 
-* System dependencies
+* Installation is absolutely standard: rvm a 2.4.1 gemset, pull the repo and bundle install.
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+All the logic is in the PagizzleHelper module.
