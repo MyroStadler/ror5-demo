@@ -1,0 +1,14 @@
+<div class="pagizzle">
+    <h2 class="heading heading--two">Welcome to the wonderful world of pagination.</h2>
+    <p>
+        Page size: 
+        <%= @page_size %>
+    </p>
+    <p>
+        Page index: 
+        <%= @page_index %>
+    </p>
+    <%= render "pagizzle/controls", :page_size => @page_size, :page_index => @page_index %>
+    <%= render "pagizzle/items", :page_size => @page_size, :page_index => @page_index %>
+    <%= render "pagizzle/controls", :page_size => @page_size, :page_index => @page_index %>
+</div>

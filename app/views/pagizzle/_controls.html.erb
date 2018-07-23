@@ -1,0 +1,85 @@
+
+<section class="pagizzle-controls">
+        <% jumps_back = get_prev_jumps(page_size, page_index) %>
+        <% if !jumps_back.empty? %>
+            <select class="jump-back">
+                <option value="" selected>Jump back...</option>
+                <% jumps_back.each do |jump| %>
+                    <option value="<%= jump[1] %>"><%= jump[0] %></option>
+                <% end %>
+            </select>
+        <% end %>
+
+        <% if page_index > 0 %>
+            <a href="<%= get_url_for_first_page(page_size) %>">First</a>
+            <span>...</span>
+        <% end %>
+
+        <% get_prev_pages(page_size, page_index).each do |prev_index| %>
+            <a href="/?page_size=<%= page_size %>&page_index=<%= prev_index %>"><%= prev_index + 1 %></a>
+        <% end %>
+        <span class="current-page"><%= page_index + 1 %></span>
+        <% get_next_pages(page_size, page_index).each do |next_index| %>
+            <a href="/?page_size=<%= page_size %>&page_index=<%= next_index %>"><%= next_index + 1 %></a>
+        <% end %>
+
+        <% if page_index < get_last_page_index(page_size) %>
+            <span>...</span>
+            <a href="<%= get_url_for_last_page(page_size) %>">Last</a>
+        <% end %>
+
+        <% jumps_forward = get_next_jumps(page_size, page_index) %>
+        <% if !jumps_forward.empty? %>
+            <select class="jump-forward">
+                <option value="" selected>Jump forward...</option>
+                <% jumps_forward.each do |jump| %>
+                    <option value="<%= jump[1] %>"><%= jump[0] %></option>
+                <% end %>
+            </select>
+        <% end %>
+
+        <select class="page-size" style="margin-left: 20px;">
+            <option value="10">10</option>
+            <option value="100">100</option>
+            <option value="1000">1,000</option>
+            <option value="10000">10,000</option>
+        </select>
+        <span>per page</span>
+
+
+    <script>
+        (function(){
+            var $container = $(document.currentScript).closest('.pagizzle-controls');
+            var $pageSize = $container.find('select.page-size');
+            var pageSize = parseInt(<%= page_size %>);
+            var pageIndexStart = parseInt(<%= page_index %>);
+            if(!$pageSize.find('option[value="' + pageSize + '"]').length) {
+                // the page size is not a sanctioned one, reset
+                pageSize = 1000;
+            }
+            $pageSize.find('option[value="' + pageSize + '"]').prop('selected', true);
+            $pageSize.change(function(){
+                document.location.href = "/?page_size=" + $pageSize.val() + "&page_index=" 
+                        + pageIndexStart;
+            });
+            var $jumpBack = $container.find('select.jump-back');
+            $jumpBack.change(function(){
+                var val = parseInt($(this).val());
+                if(!val) {
+                    return;
+                }
+                document.location.href = "/?page_size=" + $pageSize.val() + "&page_index=" 
+                        + val;
+            });
+            var $jumpForward = $container.find('select.jump-forward');
+            $jumpForward.change(function(){
+                var val = parseInt($(this).val());
+                if(!val) {
+                    return;
+                }
+                document.location.href = "/?page_size=" + $pageSize.val() + "&page_index=" 
+                        + val;
+            });
+        })();
+    </script>
+</section>
